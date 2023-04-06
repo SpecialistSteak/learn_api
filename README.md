@@ -29,6 +29,4 @@ I would like to extend this project further, and add more features to it. Here a
 - Having more endpoints and types of data to play around with 
 - Utilizing real services like Twitter, Google Maps, etc.
 
-Since this is an early prototype, I would like to get feedback from the community and see what they think about this project. I would also like to know what features you would like to see in this project.
-
-Regardless, I hope you enjoy this project and learn something new from it. If you have any feedback or questions, feel free to contact me through GitHub!
+Since this is an early prototype, I would like to get feedback from the community and see what they think about this project. I would also like to know what features you would like to see in this project. Regardless, I hope you enjoy this project and learn something new from it. If you have any feedback or questions, feel free to contact me through GitHub!
