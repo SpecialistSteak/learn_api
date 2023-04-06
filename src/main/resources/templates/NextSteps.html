@@ -32,11 +32,14 @@
       <h1 id="apis-a-slightly-more-advanced-look">APIs: A Slightly More Advanced Look</h1>
 <h2 id="table-of-contents">Table of Contents</h2>
 <ol>
+<li><a href="#announcement">Short Announcement</a></li>
 <li><a href="#data-compression">Data Compression</a></li>
 <li><a href="#insomnia">Insomnia</a></li>
 <li><a href="#authorization">Authorization</a></li>
 <li><a href="#web-scraping">Web Scraping</a></li>
 </ol>
+<h4 id="announcement">Announcement:</h4>
+<p>I’ve made quite a few example endpoints, if you’d like to check them out, go to <code>http://localhost:8080/swagger-ui/index.html</code> for a list of them. It should include documentation on what they need, and show all of these APIs endpoints. If you’d like some practice, check them out!</p>
 <h3 id="data-compression">Data Compression</h3>
 <p>Data compression is an important aspect of sending large files through APIs, since sending even a megabyte of data can be costly, performance and bandwidth wise. Because of this, people use compression on their files, using algorithms such as Google’s Brotli or GNUs Gzip. Today, we’ll look into decompressing a Gzipped JSON file.</p>
 <p>To begin, let’s send a GET request to <code>http://localhost:8080/api/compressedexampleoutput</code> using Insomnia. As we can see in the second image, the response headers tell us that the content is compressed with Gzip. While Insomnia can automatically decompress the response, Java needs additional code to do so.<br>
