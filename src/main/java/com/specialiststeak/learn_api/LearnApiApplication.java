@@ -25,6 +25,13 @@ import static com.specialiststeak.learn_api.utils.Compression.compressByteArray;
 @EnableWebMvc
 public class LearnApiApplication {
 
+    private static final ExampleObject v = new ExampleObject(
+            1,
+            "Example",
+            "This is an example object",
+            List.of("example", "object")
+    );
+
     public static void main(String[] args) {
         start();
         SpringApplication.run(LearnApiApplication.class, args);
@@ -40,15 +47,36 @@ public class LearnApiApplication {
         return "Introduction";
     }
 
+    @GetMapping({"/next-steps/", "/next-steps"})
+    public String nextSteps() {
+        return "NextSteps";
+    }
+
+    @GetMapping({"/api/login", "/api/login/"})
+    @ResponseBody
+    public ResponseEntity<String> login(@RequestParam final String accessToken) {
+        final String ACCESS_TOKEN = "1234567890";
+        String expectedAccessToken = "Bearer " + ACCESS_TOKEN;
+        if (accessToken.equals(expectedAccessToken)) {
+            return ResponseEntity.ok("Logged in");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect access token");
+        }
+    }
+
+    @GetMapping({"/api/header_auth", "/api/header_auth/"})
+    @ResponseBody
+    public ResponseEntity<String> verify(@RequestHeader("Authorization") String authorizationHeader) throws IOException, InterruptedException {
+        if (authorizationHeader.equals("Bearer 1234567890")) {
+            return ResponseEntity.ok("Logged in");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect access token");
+        }
+    }
+
     @GetMapping({"/api/exampleoutput", "/api/exampleoutput/"})
     @ResponseBody
     public ResponseEntity<ExampleObject> exampleOutput() {
-        var v = new ExampleObject(
-                1,
-                "Example",
-                "This is an example object",
-                List.of("example", "object")
-        );
         return ResponseEntity.ok(v);
     }
 
@@ -56,18 +84,7 @@ public class LearnApiApplication {
     @ResponseBody
     public ResponseEntity<byte[]> compressedExampleOutput() throws IOException {
         byte[] compressedData = compressByteArray(new ObjectMapper().writeValueAsBytes(List.of(
-                new ExampleObject(
-                        1,
-                        "Example",
-                        "This is an example object",
-                        List.of("example", "object")
-                ),
-                new ExampleObject(
-                        1,
-                        "Example",
-                        "This is an example object",
-                        List.of("example", "object")
-                )
+                v, v
         )));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

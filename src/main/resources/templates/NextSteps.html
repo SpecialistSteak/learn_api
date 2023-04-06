@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextSteps</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li><a href="#apis-a-slightly-more-advanced-look">APIs: A Slightly More Advanced Look</a>
+<ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="#thanks-for-reading-this-far-if-you-still-have-any-questions-or-would-like-to-know-more-feel-free-to-send-me-an-email-or-contact-me-through-github">Thanks for reading this far! If you still have any questions or would like to know more, feel free to send me an email or contact me through GitHub!</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <h1 id="apis-a-slightly-more-advanced-look">APIs: A Slightly More Advanced Look</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#data-compression">Data Compression</a></li>
+<li><a href="#insomnia">Insomnia</a></li>
+<li><a href="#authorization">Authorization</a></li>
+<li><a href="#web-scraping">Web Scraping</a></li>
+</ol>
+<h3 id="data-compression">Data Compression</h3>
+<p>Data compression is an important aspect of sending large files through APIs, since sending even a megabyte of data can be costly, performance and bandwidth wise. Because of this, people use compression on their files, using algorithms such as Google’s Brotli or GNUs Gzip. Today, we’ll look into decompressing a Gzipped JSON file.</p>
+<p>To begin, let’s send a GET request to <code>http://localhost:8080/api/compressedexampleoutput</code> using Insomnia. As we can see in the second image, the response headers tell us that the content is compressed with Gzip. While Insomnia can automatically decompress the response, Java needs additional code to do so.<br>
+<img src="https://i.imgur.com/mMsblL5.png" alt="Insomnia"><br>
+<img src="https://i.imgur.com/tjaDWLx.png" alt="enter image description here"></p>
+<p>If we were to send the same request in Java and print it to the console, we would get some Unicode gibberish. Since we need the response to be parseable, we need to convert it from a Gzip input stream to a String. We can do so with the following:</p>
+<pre><code>var response = HttpClient.newHttpClient().send(build, HttpResponse.BodyHandlers.ofInputStream());  
+String body = new String(new GZIPInputStream(response.body()).readAllBytes());  
+System.out.println(body);
+</code></pre>
+<p>Now, we can go and make the request as usual, this time taking the response as in input stream, signified by the line: <code>HttpResponse.BodyHandlers.ofInputStream()</code>.</p>
+<pre><code>HttpClient httpClient = HttpClient.newHttpClient();  
+HttpRequest httpRequest = HttpRequest.newBuilder()  
+  .uri(URI.create("http://localhost:8080/api/compressedexampleoutput"))  
+  .GET()  
+  .build();  
+var response = HttpClient.newHttpClient().send(build, HttpResponse.BodyHandlers.ofInputStream());  
+String body = new String(newGZIPInputStream(response.body()).readAllBytes());  
+System.out.println(body);
+</code></pre>
+<p>This updated code will correctly handle the gzip-encoded response and print the decompressed data.</p>
+<h3 id="insomnia">Insomnia</h3>
+<p>If you’re ever wondering how to make an HTTP request for something, you can create the request in Insomnia and transfer it to code. Write up your request, then press <code>ctrl + shift + g</code> and select whichever language and library you’d like to use for it. It won’t work 100% of the time, but if you are having trouble writing a request, you can write it in Insomnia and then export it to code.<br>
+<img src="https://i.imgur.com/4JyUQIM.png" alt="enter image description here"></p>
+<h3 id="authorization">Authorization</h3>
+<p>One of the largest challenges of an API is authorization. Luckily, we can tackle this difficulty in a few different ways:</p>
+<ul>
+<li>Check the documentation. Usually the website will have clear documentation on how to structure a request. This should make it simple to authorize your http request.</li>
+<li>Make the request in Insomnia and export it to code with <code>ctrl + shift + g</code></li>
+<li>Check forums online for better documentation</li>
+</ul>
+<p>Regardless of how you choose it, let’s try authorizing a request out:<br>
+Try making a request to <code>http://localhost:8080/api/login/</code> and check the response. As we can see, it tells us that it’s a BAD_REQUEST, since we haven’t given it our token. To fix this, go to the query tab and put in the following:<br>
+<img src="https://i.imgur.com/jsBOrI5.png" alt="enter image description here"><br>
+What it’s doing here is simply adding the access token to the request URL. We can send this request, and we should see a success. This is the same manner of verification that Google Docs uses, but other services use other forms of authorization.<br>
+We can also try doing the same on <code>http://localhost:8080/api/header_auth</code>, this time setting one header to Authorization and the other to <code>Bearer 1234567890</code>.<br>
+<img src="https://i.imgur.com/5wqbd9T.png" alt="enter image description here"></p>
+<h3 id="web-scraping">Web Scraping</h3>
+<p>Next up, let’s take a quick look at how web scraping works. If you’re unfamiliar, it’s what search engines do to see the content of a website, so they can recommend new websites to you. They look through the content, and try to pick one which matches your search as much as possible. While we won’t actually go into making one, let’s take a look at how it might work. Make a GET request with nothing special to <code>http://localhost:8080/</code>, and look at the result.<br>
+<img src="https://i.imgur.com/rwkcVRi.png" alt="enter image description here"><br>
+Now, where it says “Preview” click it, and switch it to “Source Code”. We now see that it gave us HTML code, containing all of the code which makes the website work.<br>
+<img src="https://i.imgur.com/3WjZZvA.png" alt="enter image description here"><br>
+Now, if you were using a dedicated library for web scraping, it would likely go in, go to each “endpoint” of the website, and collect the data for processing. This can be useful in a variety of ways, but it’s interesting to see and provides more perspective on how websites work.</p>
+<h1 id="section"></h1>
+<h2 id="thanks-for-reading-this-far-if-you-still-have-any-questions-or-would-like-to-know-more-feel-free-to-send-me-an-email-or-contact-me-through-github">Thanks for reading this far! If you still have any questions or would like to know more, feel free to send me an email or contact me through GitHub!</h2>
+
+    </div>
+  </div>
+</body>
+
+</html>

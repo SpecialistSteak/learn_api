@@ -1,10 +1,12 @@
 package com.specialiststeak.learn_api.utils;
 
+import lombok.experimental.UtilityClass;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
 import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
 
+@UtilityClass
 public class Compression {
     public static byte[] compressByteArray(byte[] data) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
