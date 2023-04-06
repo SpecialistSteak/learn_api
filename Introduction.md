@@ -1,15 +1,15 @@
 ﻿# Learn APIs - A Hands on Experience
 ## Table of Contents
-1. [Getting Started](#getting-started)
+1. [Getting Started](#getting-started)<br>&emsp;
 	a. [Requirements](#requirements)
-2. [What is an API?](#what-is-an-api?)
+2. [What is an API?](#what-is-an-api?)<br>&emsp;
 	a. [How exactly does an API work?](#how-exactly-does-an-api-work?)
-3. [Using an API](#using-an-api)
-	a. [Booting the Server](#booting-the-server)
+3. [Using an API](#using-an-api)<br>&emsp;
+	a. [Booting the Server](#booting-the-server)<br>&emsp;
 	b. [Making Your First Request](#making-your-first-request)
-4. [HTTP Requests](#http-requests)
-	a. [What is an HTTP request? What does it look like?](#what-is-an-http-request?-what-does-it-look-like?)
-	b. [Endpoints](#endpoints)
+4. [HTTP Requests](#http-requests)<br>&emsp;
+	a. [What is an HTTP request? What does it look like?](#what-is-an-http-request?-what-does-it-look-like?)<br>&emsp;
+	b. [Endpoints](#endpoints)<br>&emsp;
 	c. [Making Requests with Java](#making-requests-with-java)
 5. [Part 2](#part-2)
 ### Getting Started
