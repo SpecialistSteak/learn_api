@@ -27,7 +27,7 @@ public class SendHTTP {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .header("Accept-Encoding", "gzip")
                 .build();
-        var response = HttpClient.newHttpClient().send(build, HttpResponse.BodyHandlers.ofInputStream());
+        var response = httpClient.send(build, HttpResponse.BodyHandlers.ofInputStream());
         String body = new String(new GZIPInputStream(response.body()).readAllBytes());
         System.out.println(body);
 //        HttpResponse<byte[]> httpResponse = httpClient.send(build, HttpResponse.BodyHandlers.ofByteArray());

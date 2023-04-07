@@ -80,11 +80,13 @@ We can also try doing the same on <code>http://localhost:8080/api/header_auth</c
 <h3 id="web-scraping">Web Scraping</h3>
 <p>Next up, let’s take a quick look at how web scraping works. If you’re unfamiliar, it’s what search engines do to see the content of a website, so they can recommend new websites to you. They look through the content, and try to pick one which matches your search as much as possible. While we won’t actually go into making one, let’s take a look at how it might work. Make a GET request with nothing special to <code>http://localhost:8080/</code>, and look at the result.<br>
 <img src="https://i.imgur.com/rwkcVRi.png" alt="enter image description here"><br>
-Now, where it says “Preview” click it, and switch it to “Source Code”. We now see that it gave us HTML code, containing all of the code which makes the website work.<br>
+Now, where it says “Preview” click it, and switch it to “Source Code”. We now see that it gave us HTML code, containing all the code which makes the website work.<br>
 <img src="https://i.imgur.com/3WjZZvA.png" alt="enter image description here"><br>
 Now, if you were using a dedicated library for web scraping, it would likely go in, go to each “endpoint” of the website, and collect the data for processing. This can be useful in a variety of ways, but it’s interesting to see and provides more perspective on how websites work.</p>
+<h3>OAuth</h3>
+<p>OAuth is a form of verification, where you receive a token and secret from one service and use it to authenticate another service to do something, without giving it your password. Let's try it out. Send a GET request to <code>/oauth/token</code> for steps on how to use it, and how it works.</p>
 <h1 id="section"></h1>
-<h2 id="thanks-for-reading-this-far-if-you-still-have-any-questions-or-would-like-to-know-more-feel-free-to-send-me-an-email-or-contact-me-through-github">Thanks for reading this far! If you still have any questions or would like to know more, feel free to send me an email or contact me through GitHub!</h2>
+<h2 id="thanks-for-reading-this-far-if-you-still-have-any-questions-or-would-like-to-know-more-feel-free-to-send-me-an-email-or-contact-me-through-github">Thanks for reading this far! If you still have any questions or would like to know more, feel free to email me or contact me through GitHub!</h2>
 
     </div>
   </div>

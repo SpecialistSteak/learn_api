@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.specialiststeak.learn_api.database.UserDatabase;
 import com.specialiststeak.learn_api.objects.ExampleObject;
 import com.specialiststeak.learn_api.objects.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -19,6 +21,8 @@ import java.util.List;
 
 import static com.specialiststeak.learn_api.Init.start;
 import static com.specialiststeak.learn_api.utils.Compression.compressByteArray;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootApplication
 @Controller
@@ -71,6 +75,25 @@ public class LearnApiApplication {
         return ResponseEntity.ok()
                 .header("Hint", "Add your name to the end of the URL and make the POST request (replace `{newname}` with your name).")
                 .body(bodycontent);
+    }
+
+    @GetMapping({"/oauth/token", "/oauth/token/"})
+    @ResponseBody
+    public ResponseEntity<String> token() {
+        return ResponseEntity.ok()
+                .header("Token", "token")
+                .header("Secret", "secret")
+                .body("The headers contain your token and secret. Send a GET to /oauth/authorize/ with the token and secret in the request parameters ( ?token=token&&secret=secret ).");
+    }
+
+    @GetMapping({"/oauth/authorize", "/oauth/authorize/"})
+    @ResponseBody
+    public ResponseEntity auth(@RequestParam("token") String token, @RequestParam("secret") String secret) {
+        if (token.equals("token") && secret.equals("secret")) {
+            return ResponseEntity.ok("Authorized");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect token or secret");
+        }
     }
 
     @PostMapping({"/api/post/{newname}", "/api/post/{newname}/"})
@@ -248,4 +271,5 @@ public class LearnApiApplication {
     public ResponseEntity<String> endpoint12(@RequestHeader String name) {
         return ResponseEntity.ok("Hello " + name + "!");
     }
+
 }
