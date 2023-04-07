@@ -14,7 +14,7 @@ This project consists of two parts: an API and a tutorial.
 
 The API is a web service that responds to HTTP requests with JSON data. You can use any tool or language that can make HTTP requests to interact with the API. For example, you can use a web browser, a command-line tool like curl, or a programming language like Python or JavaScript to play around with it, the endpoints are available at `http://localhost:8080/swagger-ui/index.html`, and the schema is available at `http://localhost:8080/v3/api-docs` (after you run the JAR file).
 
-The tutorial files are a couple of files aimed at teaching you all about APIs, as well as how to use them in Java. It then covers some of the more advanced ways you can use them.
+The tutorial files are a few files aimed at teaching you all about APIs, and how to use them in Java. It then covers some of the more advanced ways you can use them.
 
 To get started, go to the `Introduction.md` file and follow the instructions there.
 
