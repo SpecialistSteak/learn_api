@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.specialiststeak.learn_api.database.UserDatabase;
 import com.specialiststeak.learn_api.objects.ExampleObject;
 import com.specialiststeak.learn_api.objects.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -21,8 +19,6 @@ import java.util.List;
 
 import static com.specialiststeak.learn_api.Init.start;
 import static com.specialiststeak.learn_api.utils.Compression.compressByteArray;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootApplication
 @Controller
@@ -69,7 +65,7 @@ public class LearnApiApplication {
         String bodycontent = "Hello " + name +
                 "! Now try sending a POST request to /api/post/{newname} to change the name. " +
                 "If you'd like a hint, check the headers of this response with `System.out.println(response.headers());`";
-        if(!name.equals("{no name yet}")) {
+        if (!name.equals("{no name yet}")) {
             bodycontent = "Hello " + name + "!" + " Now send a PUT request to /api/PUT/ to change the name. We need to add `?name=newname` to the end of the URL to tell it that the request parameter is `name` and the value is `newname`.";
         }
         return ResponseEntity.ok()
@@ -115,15 +111,15 @@ public class LearnApiApplication {
         char charA;
         try {
             charA = charb.charAt(0);
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.ok("The body is empty! Try again. If you're confused, try using .body(\"a\") to set the body to \"a\".");
         }
         String oldName = name;
         name = name.replaceAll(String.valueOf(charA), "");
-        if(oldName.equals(name)){
+        if (oldName.equals(name)) {
             return ResponseEntity.ok("You don't have any " + charA + "'s in your name! Try again.");
         }
-        return ResponseEntity.ok("Deleted all " + charA + "'s from your name! Your new name is: "  + name + ". Congrats, you've completed the tutorial!");
+        return ResponseEntity.ok("Deleted all " + charA + "'s from your name! Your new name is: " + name + ". Congrats, you've completed the tutorial!");
     }
 
     @GetMapping({"/api/login", "/api/login/"})
